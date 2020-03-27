@@ -1,8 +1,11 @@
 import numpy as np
 from dqn_agent import DQNAgent
 from utils import make_env, plot_learning_curve
+from hyperdash import Experiment
 
 if __name__ == '__main__':
+    exp = Experiment("Pong")
+
     env = make_env('PongNoFrameskip-v4')
     best_score = -np.inf
     load_checkpoint = False
@@ -38,6 +41,10 @@ if __name__ == '__main__':
         steps_array.append(n_steps)
 
         avg_score = np.mean(scores[-100:])
+
+        exp.metric("epsilon", agent.epsilon)
+        exp.metric("avg_score", avg_score)
+
         print('episode ', i, 'score: ', score, 'average score %.1f best score %.1f epsilon %.2f' % (avg_score, best_score, agent.epsilon), 'steps ', n_steps)
 
         if avg_score > best_score:
@@ -48,3 +55,4 @@ if __name__ == '__main__':
         eps_history.append(agent.epsilon)
 
     plot_learning_curve(steps_array, scores, eps_history, figure_file)
+    exp.end()
