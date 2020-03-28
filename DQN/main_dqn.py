@@ -43,7 +43,7 @@ if __name__ == '__main__':
         avg_score = np.mean(scores[-100:])
 
         exp.metric("epsilon", agent.epsilon)
-        exp.metric("avg_score", avg_score)
+        exp.metric("score", score)
 
         print('episode ', i, 'score: ', score, 'average score %.1f best score %.1f epsilon %.2f' % (avg_score, best_score, agent.epsilon), 'steps ', n_steps)
 
